@@ -1,0 +1,26 @@
+Tables
+    1) Stock Table (home)
+        - id (stock symbol)
+        - Todays Open
+        - Todays Close
+        - Todays High
+        - Todays Low
+        - Todays Average Volume
+        - Todays History (collection id)
+        - Overall History (collection id)
+    1a) Todays History (polled at half minute)
+        - id (generated)
+        - Stock Symbol
+        - Market Price
+        - Volume
+        - Short Ratio
+        - Average volume to this point
+    1b) Overall History (polled at the 15min)
+        - id (generated)
+        - Stock Symbol
+        - Market Price
+        - Volume
+        - Short Ratio
+        - Average volume to this point
+
+Notes:
