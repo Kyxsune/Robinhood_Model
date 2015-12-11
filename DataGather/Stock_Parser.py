@@ -110,7 +110,7 @@ def get_stock_symbol(result,i):
     -------
     The stock symbol
     '''
-    return float(result['query']['results']['quote'][i]['symbol']) #? Capital Symbol or lower case
+    return result['query']['results']['quote'][i]['symbol'] #? Capital Symbol or lower case
 
 # Custom For niche cases (if frequently used add above)
 def get_blank(result,i,x=0):
