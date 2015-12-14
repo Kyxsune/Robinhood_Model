@@ -1,7 +1,10 @@
 from Stock_Parser import *
 from datetime import datetime
+from Task_Manager.celery import app
 from pymongo import MongoClient
 
+e
+@app.task
 def post_daily_collection(result, i):
     '''
     This function posts the minute updated stock price info
@@ -24,6 +27,8 @@ def post_daily_collection(result, i):
     }
     return post
 
+
+@app.task
 def update_stock_table(db):
     '''
     This function takes info from the daily collection database and posts it to the stock profile
