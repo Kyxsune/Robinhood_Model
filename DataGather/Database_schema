@@ -23,7 +23,8 @@ Tables
         - Volume
         - Short Ratio
         - Average volume to this point
-
+    1c) Stock List (Updated through web interface or command line)
+        - Name of Stock
 Notes:
 
 Need to make a dataset for testing the data functions. Worried about the replace functions
