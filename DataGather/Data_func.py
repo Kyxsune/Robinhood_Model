@@ -2,17 +2,16 @@ from Stock_Parser import *
 from datetime import datetime
 from Task_Manager.celery import app
 
-@app.task()
-def updated_stock_list(db):
+@app.task
+def post_daily_collection(db): # Ran by the minute
     '''
-    This function updates the list of stocks to be tracked. Can be modified from the command line and web interface
+    This function posts the minute updated stock price info
     Parameters
     ----------
-    db The database to be updated.
-
+    db database to be modified
     Returns
     -------
-
+    adds to the daily collection
     '''
     Stock_list = []
     pipeline = { #Query
@@ -21,22 +20,10 @@ def updated_stock_list(db):
                     }
          }
     }
-    for i in db.stock_list.aggregate(pipeline):
-        Stock_list.append(i[u'_id'])
-    return Stock_list
-
-@app.task
-def post_daily_collection(result, db): # Ran by the half minute
-    '''
-    This function posts the half minute updated stock price info
-    Parameters
-    ----------
-    result Result returned from a YQL query
-    db database to be modified
-    Returns
-    -------
-    adds to the daily collection
-    '''
+    for i in db.stock_list.aggregate(pipeline): # This can be written more efficiently
+        x = str(i[u'_id'])
+        Stock_list.append(x)
+    result = stock_get(Stock_list)
     for i in range(len(result)):
         post = {
             "Symbol": get_stock_symbol(result,i),
@@ -129,3 +116,16 @@ def update_stock_table(db): # Ran by the minute
             upsert=True
         )
 
+@app.task
+def clear_daily_collection(db):
+    '''
+    Clears out the daily database
+    Parameters
+    ----------
+    db
+
+    Returns
+    -------
+
+    '''
+    db.daily_stock.drop()

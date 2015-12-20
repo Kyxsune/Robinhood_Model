@@ -30,3 +30,8 @@ Notes:
 Need to make a dataset for testing the data functions. Worried about the replace functions
 
 Next step is Task management with celery. Yay.
+
+#set up SMTP server for emailing
+
+Scheduling
+http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html#beat-entries

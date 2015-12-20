@@ -3,14 +3,9 @@ from __future__ import absolute_import
 
 from celery import Celery
 
-app = Celery('Task_Manager',
-             broker="amqp://",
-             backend='amqp://',
-             include=['DataGather.Data_func'])
+app = Celery()
 
-#app.conf.update(
-    # This is where configureations go
-#)
+app.config_from_object('celeryconfig')
 
 if __name__ == '__main__':
     app.start()
