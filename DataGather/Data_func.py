@@ -129,3 +129,7 @@ def clear_daily_collection(db):
 
     '''
     db.daily_stock.drop()
+
+@app.task
+def post33():
+    print("itworked")

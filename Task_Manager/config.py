@@ -54,6 +54,11 @@ CELERYBEAT_SCHEDULE = {
         ),
         'args': ("Stox"), # Have to determine DB name
     },
+    'Test':{
+        'task':'Data_func.post33',
+        'schedule': crontab(
+        ),
+    },
 
 }
 
