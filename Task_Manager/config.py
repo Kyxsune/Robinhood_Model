@@ -1,5 +1,5 @@
-from pytz import timezone
 from __future__ import absolute_import
+from pytz import timezone
 from celery.schedules import crontab
 
 # Celery Config File
