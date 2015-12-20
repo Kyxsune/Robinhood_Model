@@ -1,5 +1,7 @@
 from pytz import timezone
+from __future__ import absolute_import
 from celery.schedules import crontab
+
 # Celery Config File
 
 ## Broker settings.
