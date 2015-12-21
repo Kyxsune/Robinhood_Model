@@ -17,7 +17,6 @@ def post_daily_collection(db): # Ran by the minute
     db = MongoClient()[db]
     Stock_list = []
     pipeline = { #Query
-        {"$sort": {"$Time":1}},
         {"$group": {"_id": "$Symbol",
                     }
          }
@@ -76,7 +75,6 @@ def update_Historical_table(db): # Ran by the 15 minute
             "Time": datetime.utcnow()
         }
         x = str(i[u'_id']) + '_history'
-
         db[x].insert_one(post)
 
 
