@@ -1,7 +1,7 @@
 from Stock_Parser import *
 from datetime import datetime
 from Task_Manager.celery import app
-
+from pymongo import MongoClient
 
 @app.task
 def post_daily_collection(db): # Ran by the minute
@@ -14,6 +14,7 @@ def post_daily_collection(db): # Ran by the minute
     -------
     adds to the daily collection
     '''
+    db = MongoClient()[db]
     Stock_list = []
     pipeline = { #Query
         {"$sort": {"$Time":1}},
@@ -51,6 +52,7 @@ def update_Historical_table(db): # Ran by the 15 minute
     -------
     Updates the stock table based on query of daily collection
     '''
+    db = MongoClient()[db]
     pipeline = { #Query
         {"$sort": {"$Time":1}},
         {"$group": {"_id": "$Symbol",
@@ -90,6 +92,7 @@ def update_stock_table(db): # Ran by the minute
     -------
     Updates the stock table based on query of daily collection
     '''
+    db = MongoClient()[db]
     pipeline = { #Query
         {"$sort": {"$Time":1}},
         {"$group": {"_id": "$Symbol",
@@ -129,8 +132,8 @@ def clear_daily_collection(db):
 
     Returns
     -------
-
     '''
+    db = MongoClient()[db]
     db.daily_stock.drop()
 
 
