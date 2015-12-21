@@ -26,7 +26,7 @@ CELERYBEAT_SCHEDULE = {
             hour='9-17',
             day_of_week='mon-fri'
         ),
-        'args': ("Stox"), # Have to determine DB name
+        'args': ("stox"), # Have to determine DB name
     },
     'Update-History':{
         'task':'Data_func.Historical_table',
@@ -35,7 +35,7 @@ CELERYBEAT_SCHEDULE = {
             day_of_week='mon-fri',
             minute='*/10',
         ),
-        'args': ("Stox"), # Have to determine DB name
+        'args': ("stox"), # Have to determine DB name
     },
     'Update Stock Table':{
         'task':'Data_func.update_stock_table',
@@ -43,7 +43,7 @@ CELERYBEAT_SCHEDULE = {
             hour='9-17',
             day_of_week='mon-fri'
         ),
-        'args': ("Stox"), # Have to determine DB name
+        'args': ("stox"), # Have to determine DB name
     },
     'Clear Daily Table':{
         'task':'Data_func.clear_daily_collection',
@@ -52,7 +52,7 @@ CELERYBEAT_SCHEDULE = {
             minute=0,
             hour=9,
         ),
-        'args': ("Stox"), # Have to determine DB name
+        'args': ("stox"), # Have to determine DB name
     },
 }
 
