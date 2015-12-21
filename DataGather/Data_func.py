@@ -25,9 +25,7 @@ def post_daily_collection(db): # Ran by the minute
         x = str(i[u'_id'])
         Stock_list.append(x)
     result = stock_get(Stock_list)
-    print result
     for i in range(len(result['query']['results']['quote'])):
-	print i 
         post = {
             "Symbol": get_stock_symbol(result,i),
             "MarketPrice": get_market_price(result, i),
@@ -38,7 +36,6 @@ def post_daily_collection(db): # Ran by the minute
             "Time": datetime.utcnow()
         }
         db.daily_stock.insert_one(post)
-post_daily_collection('stox')
 
 @app.task
 def update_Historical_table(db): # Ran by the 15 minute
@@ -54,7 +51,7 @@ def update_Historical_table(db): # Ran by the 15 minute
     Updates the stock table based on query of daily collection
     '''
     db = MongoClient()[db]
-    pipeline = { #Query
+    pipeline = [ #Query
         {"$sort": {"$Time":1}},
         {"$group": {"_id": "$Symbol",
                     "AvgVolume": {"$avg": "$Volume"},
@@ -63,9 +60,9 @@ def update_Historical_table(db): # Ran by the 15 minute
                     "TodaysLow": {"$min":"$MarketPrice"},
                     "Open": {"$first":"$MarketPrice"},
                     "Close":{"$last":"$MarketPrice"}
-                    }
+                    },
          }
-    }
+    ]
     for i in db.daily_stock.aggregate(pipeline):
         post = { # Uses BSON unicode strings as keys
             "Today_Open": i[u'Open'],
@@ -93,7 +90,7 @@ def update_stock_table(db): # Ran by the minute
     Updates the stock table based on query of daily collection
     '''
     db = MongoClient()[db]
-    pipeline = { #Query
+    pipeline = [ #Query
         {"$sort": {"$Time":1}},
         {"$group": {"_id": "$Symbol",
                     "AvgVolume": {"$avg": "$Volume"},
@@ -102,9 +99,9 @@ def update_stock_table(db): # Ran by the minute
                     "TodaysLow": {"$min":"$MarketPrice"},
                     "Open": {"$first":"$MarketPrice"},
                     "Close":{"$last":"$MarketPrice"}
-                    }
+                    },
          }
-    }
+    ]
     for i in db.daily_stock.aggregate(pipeline):
         post = { # Uses BSON unicode strings as keys
             "Today_Open": i[u'Open'],
