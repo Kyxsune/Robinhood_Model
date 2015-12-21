@@ -16,11 +16,11 @@ def post_daily_collection(db): # Ran by the minute
     '''
     db = MongoClient()[db]
     Stock_list = []
-    pipeline = { #Query
+    pipeline = [ #Query
         {"$group": {"_id": "$Symbol",
                     }
-         }
-    }
+         },
+    ]
     for i in db.stock_list.aggregate(pipeline): # This can be written more efficiently
         x = str(i[u'_id'])
         Stock_list.append(x)
