@@ -15,7 +15,7 @@ CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_RESULT_PERSISTENT = True
 
 #Use Eastern Timezone
-CELERY_TIMEZONE = timezone('US/Eastern')
+CELERY_TIMEZONE = timezone('US/Eastern').zone
 
 #Celery Beat Scheduler
 
