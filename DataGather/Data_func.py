@@ -1,9 +1,9 @@
 from Stock_Parser import *
 from datetime import datetime
-from Task_Manager.celery import celery
+from Task_Manager.celery import app
 
 
-@celery.task
+@app.task
 def post_daily_collection(db): # Ran by the minute
     '''
     This function posts the minute updated stock price info
@@ -38,7 +38,7 @@ def post_daily_collection(db): # Ran by the minute
         db.daily_stock.insert_one(post)
 
 
-@celery.task
+@app.task
 def update_Historical_table(db): # Ran by the 15 minute
     '''
     This function takes info from the daily collection database and posts it to the collection for the historical
@@ -78,7 +78,7 @@ def update_Historical_table(db): # Ran by the 15 minute
         db[x].insert_one(post)
 
 
-@celery.task
+@app.task
 def update_stock_table(db): # Ran by the minute
     '''
     This function takes info from the daily collection database and posts it to the stock profile
@@ -119,7 +119,7 @@ def update_stock_table(db): # Ran by the minute
         )
 
 
-@celery.task
+@app.task
 def clear_daily_collection(db):
     '''
     Clears out the daily database
@@ -134,6 +134,6 @@ def clear_daily_collection(db):
     db.daily_stock.drop()
 
 
-@celery.task
+@app.task
 def post33():
     print("itworked")
