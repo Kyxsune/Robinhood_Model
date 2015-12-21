@@ -17,7 +17,7 @@ def post_daily_collection(db): # Ran by the minute
     db = MongoClient()[db]
     Stock_list = []
     pipeline = [ #Query
-        {"$group": {"_id": "$Symbol",
+        {"$group": {"_id": "$_id",
                     }
          },
     ]
@@ -25,7 +25,9 @@ def post_daily_collection(db): # Ran by the minute
         x = str(i[u'_id'])
         Stock_list.append(x)
     result = stock_get(Stock_list)
-    for i in range(len(result)):
+    print result
+    for i in range(len(result['query']['results']['quote'])):
+	print i 
         post = {
             "Symbol": get_stock_symbol(result,i),
             "MarketPrice": get_market_price(result, i),
@@ -36,7 +38,7 @@ def post_daily_collection(db): # Ran by the minute
             "Time": datetime.utcnow()
         }
         db.daily_stock.insert_one(post)
-
+post_daily_collection('stox')
 
 @app.task
 def update_Historical_table(db): # Ran by the 15 minute
