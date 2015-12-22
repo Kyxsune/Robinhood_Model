@@ -15,7 +15,7 @@ def post_daily_collection(db): # Ran by the minute
     adds to the daily collection
     '''
     db = MongoClient()[db]
-    Stock_list = ['ATVI','GOOG']
+    Stock_list = []
     pipeline = [ #Query
         {"$group": {"_id": "$_id",
                     }
@@ -107,6 +107,7 @@ def update_stock_table(db): # Ran by the minute
     ]
     for i in db.daily_stock.aggregate(pipeline):
         post = { # Uses BSON unicode strings as keys
+            "_id": i[u'_id'],
             "Today_Open": i[u'Open'],
             "Today_Close": i[u'Close'],
             "Today_Low": i[u'TodaysLow'],
