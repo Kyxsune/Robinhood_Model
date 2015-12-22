@@ -8,7 +8,7 @@ from celery.schedules import crontab
 BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 
 # List of modules to import when celery starts.
-CELERY_IMPORTS = ('DataGather.Data_func', )
+CELERY_IMPORTS = ('Task_Manager.DataGather.Data_func', )
 
 ## Using the database to store task state and results.
 CELERY_RESULT_BACKEND = 'rpc://'
@@ -53,6 +53,12 @@ CELERYBEAT_SCHEDULE = {
             hour=9,
         ),
         'args': ("stox"), # Have to determine DB name
+    },
+    'Test':{
+        'task':'Data_func.post33',
+        'schedule': crontab(
+            minute ='*',
+        ),
     },
 }
 
