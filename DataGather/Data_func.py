@@ -15,7 +15,7 @@ def post_daily_collection(db): # Ran by the minute
     adds to the daily collection
     '''
     db = MongoClient()[db]
-    Stock_list = []
+    Stock_list = ['ATVI','GOOG']
     pipeline = [ #Query
         {"$group": {"_id": "$_id",
                     }
@@ -37,6 +37,8 @@ def post_daily_collection(db): # Ran by the minute
         }
         db.daily_stock.insert_one(post)
 
+#post_daily_collection('stox')
+
 @app.task
 def update_Historical_table(db): # Ran by the 15 minute
     '''
@@ -52,7 +54,7 @@ def update_Historical_table(db): # Ran by the 15 minute
     '''
     db = MongoClient()[db]
     pipeline = [ #Query
-        {"$sort": {"$Time":1}},
+        {"$sort": {"Time":1}},
         {"$group": {"_id": "$Symbol",
                     "AvgVolume": {"$avg": "$Volume"},
                     "AvgShort": {"$avg": "$ShortRatio"},
@@ -76,6 +78,7 @@ def update_Historical_table(db): # Ran by the 15 minute
         x = str(i[u'_id']) + '_history'
         db[x].insert_one(post)
 
+#update_Historical_table('stox')
 
 @app.task
 def update_stock_table(db): # Ran by the minute
@@ -91,14 +94,14 @@ def update_stock_table(db): # Ran by the minute
     '''
     db = MongoClient()[db]
     pipeline = [ #Query
-        {"$sort": {"$Time":1}},
+        {"$sort": {"Time":1}},
         {"$group": {"_id": "$Symbol",
                     "AvgVolume": {"$avg": "$Volume"},
-                    "AvgShort": {"$avg": "$ShortRatio"},
+                    "AvgShort": {"$avg": "ShortRatio"},
                     "TodaysHigh": {"$max": "$MarketPrice"},
                     "TodaysLow": {"$min":"$MarketPrice"},
                     "Open": {"$first":"$MarketPrice"},
-                    "Close":{"$last":"$MarketPrice"}
+                    "Close": {"$last":"$MarketPrice"}
                     },
          }
     ]
@@ -113,11 +116,12 @@ def update_stock_table(db): # Ran by the minute
             "Time": datetime.utcnow()
         }
         db.stock_table.replace_one( # May need to be rewritten
-            {"_id":[u'id']},
+            {"_id": i[u'_id']},
             post,
             upsert=True
         )
 
+#update_stock_table('stox')
 
 @app.task
 def clear_daily_collection(db):
