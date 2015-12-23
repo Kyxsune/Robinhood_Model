@@ -1,11 +1,11 @@
 from datetime import datetime
 
 from Stock_Parser import *
-from Task_Manager.celery import app
+from Task_Manager.celery.celery import celery
 from pymongo import MongoClient
 
 
-@app.task
+@celery.task
 def post_daily_collection(db): # Ran by the minute
     '''
     This function posts the minute updated stock price info
@@ -41,7 +41,7 @@ def post_daily_collection(db): # Ran by the minute
 
 #post_daily_collection('stox')
 
-@app.task
+@celery.task
 def update_Historical_table(db): # Ran by the 15 minute
     '''
     This function takes info from the daily collection database and posts it to the collection for the historical
@@ -82,7 +82,7 @@ def update_Historical_table(db): # Ran by the 15 minute
 
 #update_Historical_table('stox')
 
-@app.task
+@celery.task
 def update_stock_table(db): # Ran by the minute
     '''
     This function takes info from the daily collection database and posts it to the stock profile
@@ -126,7 +126,7 @@ def update_stock_table(db): # Ran by the minute
 
 #update_stock_table('stox')
 
-@app.task
+@celery.task
 def clear_daily_collection(db):
     '''
     Clears out the daily database
@@ -141,6 +141,6 @@ def clear_daily_collection(db):
     db.daily_stock.drop()
 
 
-@app.task
+@celery.task
 def post33():
     print("itworked")

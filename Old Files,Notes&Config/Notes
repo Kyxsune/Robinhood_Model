@@ -3,5 +3,7 @@ Created Daemon Files
     Remember Celery user has to have ownership of all log files & shell acess
     Created Test Script post33
 Define database to sit on mounted drive instead of sd card
-    And define database location
+    And define database location 
+Make sure the Worker and Beat have the same names
+	Hero -> http://serverfault.com/questions/416888/celery-daemon-receives-unregistered-tasks
 

@@ -21,7 +21,7 @@ CELERY_TIMEZONE = timezone('US/Eastern').zone
 
 CELERYBEAT_SCHEDULE = {
     'Query-Yahoo':{
-        'task':'Data_func.post_daily_collection',
+        'task':'Task_Manager.DataGather.Data_func.post_daily_collection',
         'schedule': crontab(
             hour='9-17',
             day_of_week='mon-fri'
@@ -29,7 +29,7 @@ CELERYBEAT_SCHEDULE = {
         'args': ("stox"), # Have to determine DB name
     },
     'Update-History':{
-        'task':'Data_func.Historical_table',
+        'task':'Task_Manager.DataGather.Data_func.Historical_table',
         'schedule': crontab(
             hour='9-17',
             day_of_week='mon-fri',
@@ -38,7 +38,7 @@ CELERYBEAT_SCHEDULE = {
         'args': ("stox"), # Have to determine DB name
     },
     'Update Stock Table':{
-        'task':'Data_func.update_stock_table',
+        'task':'Task_Manager.DataGather.Data_func.update_stock_table',
         'schedule': crontab(
             hour='9-17',
             day_of_week='mon-fri'
@@ -55,7 +55,7 @@ CELERYBEAT_SCHEDULE = {
         'args': ("stox"), # Have to determine DB name
     },
     'Test':{
-        'task':'Data_func.post33',
+        'task':'Task_Manager.DataGather.Data_func.post33',
         'schedule': crontab(
             minute ='*',
         ),

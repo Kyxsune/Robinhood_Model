@@ -2,8 +2,9 @@
 from __future__ import absolute_import
 from celery import Celery
 
-app = Celery('Task_Manager')
-app.config_from_object('config')
+celery = Celery(include=[
+			 'Task_Manager.DataGather.Data_func'])
+celery.config_from_object('config')
 
 if __name__ == '__main__':
-    app.start()
+    celery.start()
