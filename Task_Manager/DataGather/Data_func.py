@@ -38,7 +38,7 @@ def post_daily_collection(db): # Ran by the minute
             "Time": datetime.utcnow()
         }
         db.daily_stock.insert_one(post)
-
+    MongoClient().close()
 #post_daily_collection('stox')
 
 @celery.task
@@ -79,7 +79,7 @@ def update_Historical_table(db): # Ran by the 15 minute
         }
         x = str(i[u'_id']) + '_history'
         db[x].insert_one(post)
-
+    MongoClient.close()
 #update_Historical_table('stox')
 
 @celery.task
@@ -123,7 +123,7 @@ def update_stock_table(db): # Ran by the minute
             post,
             upsert=True
         )
-
+    MongoClient().close()
 #update_stock_table('stox')
 
 @celery.task
@@ -139,7 +139,7 @@ def clear_daily_collection(db):
     '''
     db = MongoClient()[db]
     db.daily_stock.drop()
-
+    MongoClient.close()
 
 @celery.task
 def post33():

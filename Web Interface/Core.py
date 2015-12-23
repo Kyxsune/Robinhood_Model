@@ -1,5 +1,10 @@
-from flask import Flask
+from flask import *
+from pymongo import MongoClient
+
+#Define Application and Database
 app = Flask(__name__)
+db = MongoClient()['stox']
+
 
 @app.route('/')
 def hello_world():
