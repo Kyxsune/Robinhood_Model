@@ -17,7 +17,7 @@ def hello_world():
     return "Bokeh Server goes here"
 
 
-@app.route('/result', methods=['POST'])
+@app.route('/result', methods=['POST','GET'])
 def it_worked():
     return "It worked"
 
@@ -27,7 +27,7 @@ def stock_interest():
     if request.method == 'GET':
         return render_template('add.html')
     if request.method == 'POST':
-        sl = MongoClient()
+        sl = MongoClient()['stox']
         post = { "_id" : str(request.form['Symbol']) }
         sl.stock_list.insert_one(post)
         MongoClient().close()
