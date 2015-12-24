@@ -23,7 +23,7 @@ CELERYBEAT_SCHEDULE = {
     'Query-Yahoo':{
         'task':'Task_Manager.DataGather.Data_func.post_daily_collection',
         'schedule': crontab(
-            hour='9-17',
+            hour='9-16',
             day_of_week='mon-fri'
         ),
         'args': ("stox"), # Have to determine DB name
@@ -31,7 +31,7 @@ CELERYBEAT_SCHEDULE = {
     'Update-History':{
         'task':'Task_Manager.DataGather.Data_func.Historical_table',
         'schedule': crontab(
-            hour='9-17',
+            hour='9-16',
             day_of_week='mon-fri',
             minute='*/10',
         ),
@@ -40,7 +40,7 @@ CELERYBEAT_SCHEDULE = {
     'Update Stock Table':{
         'task':'Task_Manager.DataGather.Data_func.update_stock_table',
         'schedule': crontab(
-            hour='9-17',
+            hour='9-16',
             day_of_week='mon-fri'
         ),
         'args': ("stox"), # Have to determine DB name
@@ -53,12 +53,6 @@ CELERYBEAT_SCHEDULE = {
             hour=9,
         ),
         'args': ("stox"), # Have to determine DB name
-    },
-    'Test':{
-        'task':'Task_Manager.DataGather.Data_func.post33',
-        'schedule': crontab(
-            minute ='*',
-        ),
     },
 }
 
