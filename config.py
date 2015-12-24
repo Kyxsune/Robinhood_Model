@@ -29,7 +29,7 @@ CELERYBEAT_SCHEDULE = {
         'args': ("stox",), # Have to determine DB name
     },
     'Update-History':{
-        'task':'Task_Manager.DataGather.Data_func.Historical_table',
+        'task':'Task_Manager.DataGather.Data_func.update_Historical_table',
         'schedule': crontab(
             hour='9-16',
             day_of_week='mon-fri',
