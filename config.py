@@ -54,12 +54,6 @@ CELERYBEAT_SCHEDULE = {
         ),
         'args': ("stox"), # Have to determine DB name
     },
-    'Test':{
-        'task':'Task_Manager.DataGather.Data_func.post33',
-        'schedule': crontab(
-            minute ='*',
-        ),
-    },
 }
 
 # Error Emails
