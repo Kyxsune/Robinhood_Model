@@ -1,0 +1,19 @@
+# Absolute or relative path to the 'celery' command:
+CELERY_BIN="/usr/local/bin/celery"
+
+# App instance to use
+# comment out this line if you don't use an app
+#CELERY_APP='Task_Manager.celery.celery'
+# or fully qualified:
+CELERY_APP="Task_Manager.celery.celery:celery"
+
+# Where to chdir at start.
+CELERYBEAT_CHDIR="/home/pi/Robinhood_Model/"
+
+# Extra arguments to celerybeat
+CELERYBEAT_OPTS="--schedule=/var/run/celery/celerybeat-schedule"
+
+#Celery Beat Logging
+CELERYBEAT_LOG_LEVEL=DEBUG
+
+CELERYD_POOL_RESTART=True
