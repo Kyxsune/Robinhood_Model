@@ -39,6 +39,7 @@ def post_daily_collection(db): # Ran by the minute
         }
         db.daily_stock.insert_one(post)
     MongoClient().close()
+
 #post_daily_collection('stox')
 
 @celery.task

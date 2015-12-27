@@ -11,3 +11,6 @@ Bokeh Plot function takes in formatted pandas frame
 Indicator centered around Pricing and Volume
     Difference between Bid and Ask Price
     Volume Component?
+
+ToDo
+    Make an Exception Handling system for None Type returns from yahoo

@@ -23,6 +23,21 @@ def stock_get(Symbols):
     result = load(urlopen(url_full))
     return result
 
+def float_extend(x):
+    '''
+    This function handles none type returned values from the results
+    Parameters
+    ----------
+    x the returned results value
+    Returns
+    -------
+    Dependent on value
+    '''
+    if x:
+        return float(x)
+    else:
+        return None
+
 # Frequently Called functions
 def get_market_price(result,i):
     '''
@@ -36,7 +51,7 @@ def get_market_price(result,i):
     -------
     The market price of the stock currently
     '''
-    return float(result['query']['results']['quote'][i]['LastTradePriceOnly'])
+    return float_extend(result['query']['results']['quote'][i]['LastTradePriceOnly'])
 
 def get_ask_price(result,i):
     '''
@@ -51,7 +66,7 @@ def get_ask_price(result,i):
     -------
     The ask price of the stock currently
     '''
-    return float(result['query']['results']['quote'][i]['Ask'])
+    return float_extend(result['query']['results']['quote'][i]['Ask'])
 
 def get_bid_price(result,i):
     '''
@@ -66,7 +81,7 @@ def get_bid_price(result,i):
     -------
     The bid price of the stock currently
     '''
-    return float(result['query']['results']['quote'][i]['Bid'])
+    return float_extend(result['query']['results']['quote'][i]['Bid'])
 
 def get_volume(result,i):
     '''
@@ -81,7 +96,7 @@ def get_volume(result,i):
     -------
     The bid price of the stock currently
     '''
-    return float(result['query']['results']['quote'][i]['Volume'])
+    return float_extend(result['query']['results']['quote'][i]['Volume'])
 
 def get_short_ratio(result,i):
     '''
@@ -96,7 +111,7 @@ def get_short_ratio(result,i):
     -------
     The bid price of the stock currently
     '''
-    return float(result['query']['results']['quote'][i]['ShortRatio'])
+    return float_extend(result['query']['results']['quote'][i]['ShortRatio'])
 
 def get_stock_symbol(result,i):
     '''
@@ -127,8 +142,9 @@ def get_blank(result,i,x=0):
 
     '''
     if x:
-       return float(result['query']['results']['quote'][i][x])
+       return float_extend(result['query']['results']['quote'][i][x])
     else:
         return None
 
-
+x = stock_get(["ATVI","GOOG"])
+print get_bid_price(x,0)
