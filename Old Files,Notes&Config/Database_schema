@@ -17,9 +17,11 @@ Tables
         -$BidPrice
         -$AskPrice
         -$Time
-    1b) Overall History (polled at the 15min)
+    1b) Overall History (polled at the 5min)
         - id (generated)
         - Market Price
+        - Average Bid Price
+        - Average Ask Price
         - Volume
         - Short Ratio
         - Average volume to this point
@@ -27,11 +29,7 @@ Tables
         - Name of Stock
 Notes:
 
-Need to make a dataset for testing the data functions. Worried about the replace functions
-
-Next step is Task management with celery. Yay.
-
-#set up SMTP server for emailing
+Need to implement Monary for the Web Interface calls and building
 
 Scheduling
 http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html#beat-entries

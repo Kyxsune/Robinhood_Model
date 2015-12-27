@@ -33,7 +33,7 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(
             hour='9-16',
             day_of_week='mon-fri',
-            minute='*/10',
+            minute='*/5',
         ),
         'args': ("stox",), # Have to determine DB name
     },

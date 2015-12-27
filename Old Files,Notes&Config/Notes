@@ -6,4 +6,8 @@ Define database to sit on mounted drive instead of sd card
     And define database location 
 Make sure the Worker and Beat have the same names
 	Hero -> http://serverfault.com/questions/416888/celery-daemon-receives-unregistered-tasks
+Bokeh Plot function takes in formatted pandas frame
 
+Indicator centered around Pricing and Volume
+    Difference between Bid and Ask Price
+    Volume Component?

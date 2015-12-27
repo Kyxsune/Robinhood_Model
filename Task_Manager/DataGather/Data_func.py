@@ -60,6 +60,8 @@ def update_Historical_table(db): # Ran by the 15 minute
         {"$group": {"_id": "$Symbol",
                     "AvgVolume": {"$avg": "$Volume"},
                     "AvgShort": {"$avg": "$ShortRatio"},
+                    "AvgAskPrice": {"avg": "$AskPrice"},
+                    "AvgBidPrice": {"avg": "$BidPrice"},
                     "TodaysHigh": {"$max": "$MarketPrice"},
                     "TodaysLow": {"$min":"$MarketPrice"},
                     "Open": {"$first":"$MarketPrice"},
@@ -74,6 +76,8 @@ def update_Historical_table(db): # Ran by the 15 minute
             "Today_Low": i[u'TodaysLow'],
             "Today_High": i[u'TodaysHigh'],
             "Average_Short": i[u'AvgShort'],
+            "Average_Ask": i[u'AvgAskPrice'],
+            "Average_Bid": i[u'AvgBidPrice'],
             "Average_Volume": i[u'AvgVolume'],
             "Time": datetime.utcnow()
         }
