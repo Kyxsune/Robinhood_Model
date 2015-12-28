@@ -61,8 +61,8 @@ def update_Historical_table(db): # Ran by the 15 minute
         {"$group": {"_id": "$Symbol",
                     "AvgVolume": {"$avg": "$Volume"},
                     "AvgShort": {"$avg": "$ShortRatio"},
-                    "AvgAskPrice": {"avg": "$AskPrice"},
-                    "AvgBidPrice": {"avg": "$BidPrice"},
+                    "AvgAskPrice": {"$avg": "$AskPrice"},
+                    "AvgBidPrice": {"$avg": "$BidPrice"},
                     "TodaysHigh": {"$max": "$MarketPrice"},
                     "TodaysLow": {"$min":"$MarketPrice"},
                     "Open": {"$first":"$MarketPrice"},
@@ -84,7 +84,8 @@ def update_Historical_table(db): # Ran by the 15 minute
         }
         x = str(i[u'_id']) + '_history'
         db[x].insert_one(post)
-    MongoClient.close()
+    MongoClient().close()
+
 #update_Historical_table('stox')
 
 @celery.task
@@ -144,7 +145,7 @@ def clear_daily_collection(db):
     '''
     db = MongoClient()[db]
     db.daily_stock.drop()
-    MongoClient.close()
+    MongoClient().close()
 
 @celery.task
 def post33():
