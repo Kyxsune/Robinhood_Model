@@ -76,7 +76,7 @@ def update_Historical_table(db): # Ran by the 15 minute
                     "HighVolume": {"$min":"$Volume"},
                     "LowVolume": {"$max":"$Volume"},
                     "OpenVolume": {"$first":"$Volume"},
-                    "CloseVolume": {"$Last":"$Volume"}
+                    "CloseVolume": {"$last":"$Volume"}
                     },
          }
     ]
