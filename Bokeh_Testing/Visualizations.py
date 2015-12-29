@@ -5,14 +5,21 @@ from urllib import urlopen
 from bokeh.models import HoverTool
 from bokeh.plotting import figure,show, output_file , ColumnDataSource
 from pandas import DataFrame , to_datetime
+from pymongo import MongoClient
 
 
-def Get_Test_Data():
+def Get_Test_Data_YQL():
     # Will have to change conver_objects to specific numeric calls in the future
     result = load(urlopen("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%20%3D%20%22YHOO%22%20and%20startDate%20%3D%20%222010-01-11%22%20and%20endDate%20%3D%20%222010-05-10%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback="))
     x = DataFrame.from_dict(result['query']['results']['quote'])
     x["Date"] = to_datetime(x["Date"])
     x = x.convert_objects(convert_numeric=True)
+    return x
+
+def Get_dataframe(Symbol):
+    Symbolx = str(Symbol) + '_history'
+    Db_cursor = MongoClient()['stox'][Symbolx].find()
+    x = DataFrame.from_dict(dict(Db_cursor))
     return x
 
 def candle_stix(dataframe):

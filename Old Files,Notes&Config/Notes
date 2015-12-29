@@ -13,4 +13,7 @@ Indicator centered around Pricing and Volume
     Volume Component?
 
 ToDo
-    Make an Exception Handling system for None Type returns from yahoo
+    Set up monary on production server for graphing
+        https://github.com/mongodb/mongo-c-driver <-- build mongodb c driver from git
+            needs a lot of packages to run
+
