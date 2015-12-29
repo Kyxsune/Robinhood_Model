@@ -19,8 +19,9 @@ def Get_Test_Data_YQL():
 def Get_dataframe(Symbol):
     Symbolx = str(Symbol) + '_history'
     Db_cursor = MongoClient()['stox'][Symbolx].find()
-    x = DataFrame.from_dict(dict(Db_cursor))
+    x = DataFrame(list(Db_cursor))
     return x
+
 
 def candle_stix(dataframe):
     '''
@@ -64,4 +65,4 @@ def candle_stix(dataframe):
     show(p)
 
 
-# candle_stix(Get_Test_Data())
+candle_stix(Get_dataframe("AA"))
