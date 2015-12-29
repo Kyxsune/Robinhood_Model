@@ -20,6 +20,7 @@ def Get_dataframe(Symbol):
     Symbolx = str(Symbol) + '_history'
     Db_cursor = MongoClient()['stox'][Symbolx].find()
     x = DataFrame(list(Db_cursor))
+    x = x.convert_objects(convert_numeric=True)
     return x
 
 
@@ -36,7 +37,6 @@ def candle_stix(dataframe):
     spans = abs(dataframe.Close-dataframe.Open)
     inc = dataframe.Close > dataframe.Open
     dec = dataframe.Open > dataframe.Close
-    dataframe.Volume = dataframe.Volume/1000000
     w = 12*60*60*1000 #width about a half day in width
 
     # Define Hover tool tips
@@ -58,9 +58,9 @@ def candle_stix(dataframe):
     output_file("candlestix.html", title="Candlestix")
     TOOLS = "pan,wheel_zoom,box_zoom"
     p = figure(x_axis_type="datetime",tools=[TOOLS,hover],plot_width=800,toolbar_location="left")
-    p.segment(dataframe.Date, dataframe.Low ,dataframe.Date, dataframe.High , color="black")
-    p.rect(dataframe.Date[inc], mids[inc], w, spans[inc], source=Gain, fill_color="white", line_color="black")
-    p.rect(dataframe.Date[dec], mids[dec], w, spans[dec], source=Loss, fill_color="black", line_color="black")
+    p.segment(dataframe.Time, dataframe.Low ,dataframe.Time, dataframe.High , color="black")
+    p.rect(dataframe.Time[inc], mids[inc], w, spans[inc], source=Gain, fill_color="white", line_color="black")
+    p.rect(dataframe.Time[dec], mids[dec], w, spans[dec], source=Loss, fill_color="black", line_color="black")
     p.title = str(str(dataframe["Symbol"][1]))
     show(p)
 

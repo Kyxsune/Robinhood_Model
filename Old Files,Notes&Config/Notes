@@ -17,3 +17,17 @@ ToDo
         https://github.com/mongodb/mongo-c-driver <-- build mongodb c driver from git
             needs a lot of packages to run
 
+pipeline = [ #Query
+        {"$sort": {"Time":1}},
+        {"$group": {"_id": "$Symbol",
+                    "AvgVolume": {"$avg": "$Volume"},
+                    "AvgShort": {"$avg": "$ShortRatio"},
+                    "AvgAskPrice": {"$avg": "$AskPrice"},
+                    "AvgBidPrice": {"$avg": "$BidPrice"},
+                    "TodaysHigh": {"$max": "$MarketPrice"},
+                    "TodaysLow": {"$min":"$MarketPrice"},
+                    "Open": {"$first":"$MarketPrice"},
+                    "Close":{"$last":"$MarketPrice"}
+                    },
+         }
+    ]

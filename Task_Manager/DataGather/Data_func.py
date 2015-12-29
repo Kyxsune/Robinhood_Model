@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime , timedelta
 
 from Stock_Parser import *
 from Task_Manager.celery.celery import celery
@@ -56,30 +56,46 @@ def update_Historical_table(db): # Ran by the 15 minute
     Updates the stock table based on query of daily collection
     '''
     db = MongoClient()[db]
+    d = datetime.utcnow()
+    d_5 = d - timedelta(seconds=300)
     pipeline = [ #Query
-        {"$sort": {"Time":1}},
+        {"$match": {
+            "Time": {
+                "$gte": d_5},
+                "$lt": d
+                    }},
         {"$group": {"_id": "$Symbol",
-                    "AvgVolume": {"$avg": "$Volume"},
-                    "AvgShort": {"$avg": "$ShortRatio"},
-                    "AvgAskPrice": {"$avg": "$AskPrice"},
-                    "AvgBidPrice": {"$avg": "$BidPrice"},
-                    "TodaysHigh": {"$max": "$MarketPrice"},
-                    "TodaysLow": {"$min":"$MarketPrice"},
-                    "Open": {"$first":"$MarketPrice"},
-                    "Close":{"$last":"$MarketPrice"}
+                    "PeriodAvgVolume": {"$avg": "$Volume"},
+                    "PeriodAvgShort": {"$avg": "$ShortRatio"},
+                    "PeriodAvgAskPrice": {"$avg": "$AskPrice"},
+                    "PeriodAvgBidPrice": {"$avg": "$BidPrice"},
+                    "PeriodHigh": {"$max": "$MarketPrice"},
+                    "PeriodLow": {"$min":"$MarketPrice"},
+                    "PeriodOpen": {"$first":"$MarketPrice"},
+                    "PeriodClose": {"$last":"$MarketPrice"},
+                    "HighVolume": {"$min":"$Volume"},
+                    "LowVolume": {"$max":"$Volume"},
+                    "OpenVolume": {"$first":"$Volume"},
+                    "CloseVolume": {"$Last":"$Volume"}
                     },
          }
     ]
     for i in db.daily_stock.aggregate(pipeline):
         post = { # Uses BSON unicode strings as keys
-            "Today_Open": i[u'Open'],
-            "Today_Close": i[u'Close'],
-            "Today_Low": i[u'TodaysLow'],
-            "Today_High": i[u'TodaysHigh'],
-            "Average_Short": i[u'AvgShort'],
-            "Average_Ask": i[u'AvgAskPrice'],
-            "Average_Bid": i[u'AvgBidPrice'],
-            "Average_Volume": i[u'AvgVolume'],
+            # Price and Short Information
+            "Open": i[u'PeriodOpen'],
+            "Close": i[u'PeriodClose'],
+            "Low": i[u'PeriodLow'],
+            "High": i[u'PeriodHigh'],
+            "Average_Short": i[u'PeriodAvgShort'],
+            "Average_Ask": i[u'PeriodAvgAskPrice'],
+            "Average_Bid": i[u'PeriodAvgBidPrice'],
+            # Volume Data
+            "Open_Volume": i[u'OpenVolume'],
+            "Close_Volume": i[u'CloseVolume'],
+            "High_Volume": i[u'HighVolume'],
+            "Low_Volume": i[u'LowVolume'],
+            "Average_Volume": i[u'PeriodAvgVolume'],
             "Time": datetime.utcnow()
         }
         x = str(i[u'_id']) + '_history'
