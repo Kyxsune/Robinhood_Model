@@ -65,4 +65,4 @@ def candle_stix(dataframe):
     show(p)
 
 
-candle_stix(Get_dataframe("AA"))
+print Get_dataframe("AA")
