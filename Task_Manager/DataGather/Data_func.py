@@ -98,7 +98,6 @@ def update_Historical_table(db): # Ran by the 15 minute
             "Average_Volume": i[u'PeriodAvgVolume'],
             "Time": datetime.utcnow()
         }
-	print post
         x = str(i[u'_id']) + '_history'
         db[x].insert_one(post)
     MongoClient().close()
