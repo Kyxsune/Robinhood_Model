@@ -57,7 +57,8 @@ CELERYBEAT_SCHEDULE = {
     'IP_EMAIL':{
         'task':'IP_update.IP_Email.Email_or_No_email',
         'schedule': crontab(
-            minute=0,
+            minute='*/30',
+            hour='*',
         ),
         'args': ("stox",), # Have to determine DB name
     },
