@@ -49,8 +49,8 @@ CELERYBEAT_SCHEDULE = {
         'task':'Data_func.clear_daily_collection',
         'schedule': crontab(
             day_of_week='mon-fri',
-            minute=0,
-            hour=9,
+            minute='0',
+            hour='9',
         ),
         'args': ("stox",), # Have to determine DB name
     },
@@ -60,7 +60,7 @@ CELERYBEAT_SCHEDULE = {
             minute='*/30',
             hour='*',
         ),
-        'args': ("stox",), # Have to determine DB name
+        # Have to determine DB name
     },
 }
 
