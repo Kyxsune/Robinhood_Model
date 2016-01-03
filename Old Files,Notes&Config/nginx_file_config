@@ -1,0 +1,24 @@
+server {
+    listen          1397;
+    server_name     flower_transmission;
+
+    access_log /var/log/nginx/celery_flower.access.log;
+    error_log /var/log/nginx/celery_flower.error.log;
+
+    location ^~ /flower/ {
+        proxy_pass http://localhost:5555/;
+        proxy_redirect off;
+        proxy_set_header Host $host/flower/;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location ^~/trans/ {
+        proxy_pass http://localhost:9091;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+}
